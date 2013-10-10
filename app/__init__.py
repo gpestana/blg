@@ -12,4 +12,5 @@ db = SQLAlchemy(app)
 #dropdb -U <user> <namedb>
 #createdb -U <user> <namedb> 
 
+from app import models
 from views import general
