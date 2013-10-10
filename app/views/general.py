@@ -1,5 +1,5 @@
-from app import app
+from app import app, db
 
 @app.route('/')
 def hello():
-    return "Hello Worldino, how's life?"
+    return "HI!"
