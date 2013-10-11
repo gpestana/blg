@@ -1,0 +1,18 @@
+<h1>blG</h1>
+
+<br>
+<br>
+{% with messages = get_flashed_messages() %}
+<h4>Developer messages:</h4>
+{% for message in messages %}
+<li>{{ message }}</li>
+{% endfor %}
+{% endwith %}
+
+<br>
+<h4>Login:</h4>
+<form name="input" action="{{ url_for('login') }}" method="POST">
+Username: <input type="text" name="username"><br>
+Password: <input type="password" name="password"><br>
+<input type="submit" value="Submit">
+</form>
