@@ -50,3 +50,8 @@ def index():
 @app.route('/test')
 def test():
 	return render_template("test.html")
+
+@app.route('/testdb')
+def testdb():
+	db.newUser("user","email","pass")
+	return str(db.getUserByUsername("user"))

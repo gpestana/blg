@@ -16,7 +16,7 @@ class User(db.Model):
 		self.password = password
 
 	def __repr__(self):
-		return '<Name %r>' % self.name
+		return 'User: %r' % self.username
 
    	#Flask-Login
    	def is_active(self):
