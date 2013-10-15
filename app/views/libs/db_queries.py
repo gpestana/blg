@@ -16,12 +16,12 @@ def getUserByUsername(username):
 	filter(app.models.User.username == username).first()
 
 #Posts
-def newPost(title, content, author):
-	new_post = app.models.Post(title, content, author)
+def newPost(title, content, author, category):
+	new_post = app.models.Post(title, content, author, category)
 	db.session.add(new_post)
 	db.session.commit()
 
-def getPost(post_id):
+def getPostByID(post_id):
 	return db.session.query(app.models.Post).\
 	filter(app.models.Post.id == post_id).first()
 
@@ -37,7 +37,7 @@ def removePostWithTitle(post_title):
 
 def editPost(post_id, post_title = None, post_content = None,\
 	post_author = None, post_date = None):
-	post = getPost(post_id)
+	post = getPostByID(post_id)
 
 	if post_title != None:
 		post.title = post_title
@@ -57,7 +57,11 @@ def newTag(tag_name):
 	db.session.add(new_tag)
 	db.session.commit()
 
-def getTag(tag_name):
+def getTagByID(tag_id):
+	return db.session.query(app.models.Tag).\
+	filter(app.models.Tag.id == tag_id).first()
+
+def getTagByName(tag_name):
 	return db.session.query(app.models.Tag).\
 	filter(app.models.Tag.name == tag_name).first()
 
@@ -67,9 +71,9 @@ def removeTag(tag_name):
 	filter(app.models.Tag.name == tag_name).first()
 	#Automated way to do it ?
 	associations_posts_tag = db.session.query(app.models.PostTagsAssociation).\
-	filter(app.models.PostTagsAssociation.tag_name==tag_name).all()
+	filter(app.models.PostTagsAssociation.tag_id==tag.id).all()
 	for ass in associations_posts_tag:
-		removeTagFromPost(ass.post_id,ass.tag_name)
+		removeTagFromPost(ass.post_id,ass.tag_id)
 
 	db.session.delete(tag)
 	db.session.commit()
@@ -78,30 +82,36 @@ def getPostsByTag(tag_name):
 	return db.session.query(app.models.PostTagsAssociation).\
 	filter(app.models.PostTagsAssociation.tag_name == tag_name).all()
 
-#-todo-NOT WORKING!
 def editTag(old_tag_name, new_tag_name):
 	tag = db.session.query(app.models.Tag).\
 	filter(app.models.Tag.name == old_tag_name).first()
-	#Automated way to do it ?
-	associations_tag_posts = getPostsByTag(old_tag_name)
-	for ass in associations_tag_posts:
-		ass.tag_name = new_tag_name
-
-	tag.name=new_tag_name
+	
+	tag.name = new_tag_name
 	db.session.commit()
+
+#Categories:
+def newCategory(category_name):
+	category = app.models.Category(category_name)
+	db.session.add(category)
+	db.session.commit()
+
 
 #Posts&Tags
-def addTagToPost(post_id, tag_name):
-	post = db.session.query(app.models.Post).filter(app.models.Post.id == post_id).first()
+def addTagToPost(post_id, tag_id):
+	post = getPostByID(post_id)
+	tag = getTagByID(tag_id)
 	association = app.models.PostTagsAssociation()
-	association.tag_name = tag_name
+	association.tag_id = tag_id
+	association.post_id = post_id
+
 	post.tag.append(association)
+
 	db.session.commit()
 
-def removeTagFromPost(post_id, tag_name):
+def removeTagFromPost(post_id, tag_id):
 	association = db.session.query(app.models.PostTagsAssociation).\
 	filter(app.models.PostTagsAssociation.post_id == post_id).\
-	filter(app.models.PostTagsAssociation.tag_name == tag_name).first()
+	filter(app.models.PostTagsAssociation.tag_id == tag_id).first()
 	db.session.delete(association)
 	db.session.commit()
 
@@ -117,4 +127,6 @@ def deleteAll():
 	app.models.Post.query.delete()
 	db.session.commit()
 	app.models.Tag.query.delete()
+	db.session.commit()
+	app.models.Category.query.delete()
 	db.session.commit()

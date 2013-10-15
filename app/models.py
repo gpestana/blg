@@ -37,13 +37,16 @@ class Post(db.Model):
 	content = Column(String, nullable = False)
 	author = Column(String, nullable = False)
 
+
+	category = Column(String(50), ForeignKey('categories.name'))
 	tag = relationship("PostTagsAssociation", backref="tags", cascade='all')
 
-	def __init__(self, title, content, author):
+	def __init__(self, title, content, author, category):
 		self.title = title
 		self.content = content
 		self.author = author
 		self.date = datetime.datetime.now()
+		self.category = category
 
 	def __repr__(self):
 		return 'Post '+str(self.id)
@@ -51,22 +54,33 @@ class Post(db.Model):
 
 class Tag(db.Model):
 	__tablename__ = "tags"
-	name = Column(String(50), primary_key = True)
+	id = Column(Integer, primary_key = True)
+	name = Column(String(50), nullable = False)
 
 	def __init__(self, tag_name):
 		self.name = tag_name
 	def __repr__(self):
 		return 'Tag Name: %r' % self.name
 
+class Category(db.Model):
+	__tablename__ = "categories"
+	name = Column(String(50), primary_key = True)
+
+	post = relationship("Post")
+
+	def __init__(self, category_name):
+		self.name = category_name
+	def __repr__(self):
+		return 'Category: %r' % self.name
 
 class PostTagsAssociation(db.Model):
 	__tablename__ = "posts_tags_association"
 	post_id = Column(Integer, ForeignKey('posts.id', ondelete="CASCADE"), primary_key = True)
-	tag_name = Column(String(50), ForeignKey('tags.name', ondelete="CASCADE"), primary_key = True)
+	tag_id = Column(Integer, ForeignKey('tags.id', ondelete="CASCADE"), primary_key = True)
 	
-	#tag = relationship("Tag", backref="posts_assoc")
+	tag = relationship("Tag", backref="tags")
 
 	def __init__(self):
 		pass
 	def __repr__(self):
-		return 'Associaltion Post+Tag: ' +str(self.post_id)+", "+str(self.tag_name)
+		return 'Associaltion Post+Tag: ' +str(self.post_id)+", "+str(self.tag_id)

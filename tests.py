@@ -8,8 +8,10 @@ class TestSequencePostsTags(unittest.TestCase):
 
 	def setUp(self):
 		db.newUser("user1","user1@blg.com","pass1")
-		db.newPost("title1","content1","admin")
-		db.newPost("title2","content2","admin")
+		db.newCategory("cat1")
+		db.newCategory("cat2")
+		db.newPost("title1","content1","admin", "cat1")
+		db.newPost("title2","content2","admin", "cat2")
 		db.newTag("tag1")
 		db.newTag("tag2")
 
@@ -17,62 +19,64 @@ class TestSequencePostsTags(unittest.TestCase):
 		db.deleteAll()
 
 	def testAddTagToPost(self):
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag1")
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag2")
-		db.addTagToPost(db.getPostByTitle("title2").id, "tag1")
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag1").id)
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag2").id)
+		db.addTagToPost(db.getPostByTitle("title2").id, db.getTagByName("tag1").id)
 		tags_p1= db.getTagsByPost(db.getPostByTitle("title1").id)
 		tags_p2= db.getTagsByPost(db.getPostByTitle("title2").id)
 		#Assertions
-		self.assertEqual(tags_p1[0].tag_name,"tag1")
-		self.assertEqual(tags_p1[1].tag_name,"tag2")
-		self.assertEqual(tags_p2[0].tag_name,"tag1")
+		self.assertEqual(tags_p1[0].tag_id, db.getTagByName("tag1").id)
+		self.assertEqual(tags_p1[1].tag_id, db.getTagByName("tag2").id)
+		self.assertEqual(tags_p2[0].tag_id, db.getTagByName("tag1").id)
 
 	def testRemoveTagFromPost(self):
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag1")
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag2")
-		db.removeTagFromPost(db.getPostByTitle("title1").id, "tag1")
-		db.removeTagFromPost(db.getPostByTitle("title1").id, "tag2")
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag1").id)
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag2").id)
+		db.removeTagFromPost(db.getPostByTitle("title1").id, db.getTagByName("tag1").id)
+		db.removeTagFromPost(db.getPostByTitle("title1").id, db.getTagByName("tag2").id)
 		#Assertion
 		self.assertEqual(\
 			db.getTagsByPost(db.getPostByTitle("title2").id),[])
+		self.assertEqual(\
+			db.getTagsByPost(db.getPostByTitle("title1").id),[])
 
 	def testRemovePost(self):
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag1")
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag2")
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag1").id)
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag2").id)
 		db.removePostWithTitle("title1")
 		#Assertion
 		self.assertEqual(\
 			db.getPostByTitle("title1"),None)
 
 	def testRemoveTag(self):
-		db.addTagToPost(db.getPostByTitle("title1").id, "tag1")
-		db.addTagToPost(db.getPostByTitle("title2").id, "tag1")
+		db.addTagToPost(db.getPostByTitle("title1").id, db.getTagByName("tag1").id)
+		db.addTagToPost(db.getPostByTitle("title2").id, db.getTagByName("tag2").id)
 		db.removeTag("tag1")
 		#Assertion 
 		self.assertEqual(\
-			db.getTag("tag1"),None)
+			db.getTagByName("tag1"),None)
 
-	#NOT WORKING YET
-	'''
-	def testEditTag(self):
-		db.addTagToPost(db.getPostByTitle("title2").id, "tag1")
-		#db.editTag("tag1", "new tag1")
-		#Assertions
-		self.assertEqual(\
-			db.getTag("new tag1").name, "new tag1")
-		self.assertEqual(\
-			db.getTagsByPost(db.getPostByTitle(title2))[0].id,"new tag1")
-	'''
-	'''
+
 	def testEditPost(self):
 		post_id = db.getPostByTitle("title1").id
 		db.editPost(post_id, post_title="new_title", post_author="new_author")
 		#Assertions
 		self.assertEqual(\
-			db.getPost(post_id).title, "new_title")
+			db.getPostByID(post_id).title, "new_title")
 		self.assertEqual(\
-			db.getPost(post_id).author, "new_author")
-	'''
+			db.getPostByID(post_id).author, "new_author")
+
+	def testEditTag(self):
+		db.addTagToPost(db.getPostByTitle("title2").id, db.getTagByName("tag1").id)
+		db.editTag("tag1", "new tag1")
+		#Assertions
+		self.assertEqual(\
+			db.getTagByName("new tag1").name, "new tag1")
+
+		tag_id = db.getPostByTitle("title2").tag[0].tag_id
+		self.assertEqual(db.getTagByID(tag_id).name, "new tag1")
+	
+
 
 def init_testing_db():
 	app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', \

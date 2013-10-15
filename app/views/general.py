@@ -9,7 +9,7 @@ from flask_wtf import Form
 """
 @login_manager.user_loader
 def load_user(id):
-  return db.getUserByID(id)
+	return db.getUserByID(id)
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
@@ -51,7 +51,6 @@ def index():
 def test():
 	return render_template("test.html")
 
-@app.route('/testdb')
-def testdb():
-	db.newUser("user","email","pass")
-	return str(db.getUserByUsername("user"))
+@app.route('/blog')
+def blog():
+	return render_template("blog.html")
