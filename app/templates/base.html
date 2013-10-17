@@ -1,0 +1,46 @@
+ {% block head %}
+ <!DOCTYPE html>
+ <html lang="en" class="no-js">
+ <head>
+ 	<meta charset="UTF-8" />
+ 	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
+ 	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
+ 	<title>Gonçalo Pestana</title>
+
+ 	<meta name="description" content="Gonçalo Pestana's personal blog with wanders about social entrepreneurship, coding and awesomeness. " />
+ 	<meta name="keywords" content="Gonçalo Pestana, social innovation, social entrepreneurship, coding" />
+ 	<meta name="author" content="Codrops" />
+
+ 	<link rel="stylesheet" type="text/css" href="../static/css/default.css" />
+ 	<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+ 	<script src="../static/js/modernizr.custom.js"></script>
+ 	<script src="../static/js/jquery.js"></script>
+
+ </head>
+ {% endblock %}
+ {% block basic %}
+ <body>
+ 	<div class="container">
+ 		<header class="clearfix">
+ 			<span>Gonçalo Pestana</span>
+ 			<h4>Catchy line</h4>
+ 		</header>
+ 		<ul class="cbp-vimenu">
+ 			<li><a href="#" class="icon-logo">Logo</a></li>
+ 			<li><a href="#" class="icon-archive">Archive</a></li>
+ 			<li><a href="#" class="icon-search">Search</a></li>
+ 			<li><a href="#" class="icon-pencil">Pencil</a></li>
+				<!-- Example for active item:
+				<li class="cbp-vicurrent"><a href="#" class="icon-pencil">Pencil</a></li>
+			-->
+			<li><a href="#" class="icon-location">Location</a></li>
+			<li><a href="#" class="icon-images">Images</a></li>
+			<li><a href="#" class="icon-download">Download</a></li>
+		</ul>
+		{% endblock %}
+		<div class="main">
+			{% block main %}<!-- HERE -->{% endblock %}
+		</div>
+	</div>
+</body>
+</html>

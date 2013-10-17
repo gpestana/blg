@@ -4,7 +4,7 @@ import app.views.libs.db_queries as db
 from app import app
 from app import db as entry_point
 
-class TestSequencePostsTags(unittest.TestCase):
+class TestSequenceBasic(unittest.TestCase):
 
 	def setUp(self):
 		db.newUser("user1","user1@blg.com","pass1")
@@ -76,6 +76,30 @@ class TestSequencePostsTags(unittest.TestCase):
 		tag_id = db.getPostByTitle("title2").tag[0].tag_id
 		self.assertEqual(db.getTagByID(tag_id).name, "new tag1")
 	
+
+class TestSequencePostListing(unittest.TestCase):
+
+	def setUp(self):
+		db.newUser("user1","user1@blg.com","pass1")
+		db.newCategory("cat1")
+		db.newCategory("cat2")
+		db.newPost("title1","content1","admin", "cat1")
+		db.newPost("title2","content2","admin", "cat1")
+		db.newPost("title3","content3","admin", "cat1")
+		db.newPost("title4","content4","admin", "cat2")
+		db.newPost("title5","content5","admin", "cat2")
+		db.newTag("tag1")
+		db.newTag("tag2")
+
+	def tearDown(self):
+		db.deleteAll()
+
+	def testListPostsByOrder(self):
+		posts = db.getPostsOrderedByDate()
+		self.assertEqual(posts[0].title, "title5")
+		self.assertEqual(posts[1].title, "title4")
+		self.assertEqual(posts[2].title, "title3")
+
 
 
 def init_testing_db():

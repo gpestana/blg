@@ -1,0 +1,18 @@
+<div class = "fullPostHeader">
+
+	<h2>{{ post.title }}</h2>
+</div>
+<div class="fullPostContent">
+	<p>{{post.content}}</p>
+</div>
+
+<div class="postFooter">
+	{% if post.tag %}
+		<strong>Tags </strong>
+		{% for assoc in post.tag %}
+			<a href ='/tag/{{assoc.tag.name}}'>#{{ assoc.tag.name }}</a>
+		{% endfor %}
+	{% endif %}
+	<br>
+	at <strong>{{ post.date }}</strong> by <strong>{{ post.author }}</strong>
+</div>

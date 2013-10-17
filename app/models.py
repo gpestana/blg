@@ -46,11 +46,22 @@ class Post(db.Model):
 		self.content = content
 		self.author = author
 		self.date = datetime.datetime.now()
+		#self.date = datetime.datetime.now().strftime('%d %b %Y, %H %M')
 		self.category = category
 
 	def __repr__(self):
 		return 'Post '+str(self.id)
 	
+	@property
+	def serialize(self):
+		return {
+		   'id': self.id,
+           'title': self.title,
+           'content': self.content,
+           'date': self.date,
+           'category': self.category,
+           'author': self.author
+       }
 
 class Tag(db.Model):
 	__tablename__ = "tags"

@@ -1,0 +1,22 @@
+<div class = "shortPost">
+
+
+
+	<a href ='/post/{{post.id}}'><h3>{{ post.title }}</h3></a>
+	<p>{{post.content|truncate(150)}} <a href ='/post/{{post.id}}'>Read post</a></p>
+
+	<div class="postFooter">
+		at <strong>{{ post.date }}</strong> by <strong>{{ post.author }}</strong><br>
+		{% if post.tag %}
+		tags
+		{% for assoc in post.tag %}
+		<strong><a href ='/tag/{{assoc.tag.name}}'>#{{ assoc.tag.name }}</a></strong>
+		{% endfor %}
+		{% endif %}
+
+<script>
+	window.last_post_id = '{{post.id}}';
+</script>
+
+	</div>
+</div>

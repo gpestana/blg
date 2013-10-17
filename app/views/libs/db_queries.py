@@ -1,5 +1,7 @@
 from app import db
 import app.models
+from sqlalchemy import desc, asc
+
 
 #Users
 def newUser(username, email, password):
@@ -50,6 +52,23 @@ def editPost(post_id, post_title = None, post_content = None,\
 
 	db.session.commit()
 
+def getPostsOrderedByDate(nr_posts=None):
+	all_posts = db.session.query(app.models.Post).\
+	order_by(desc(app.models.Post.date)).all()
+	if nr_posts != None:
+		final_posts = []
+		for p in all_posts:
+			if nr_posts == 0:
+				break
+			final_posts.append(p)
+			nr_posts=nr_posts-1
+		return final_posts
+	return all_posts
+
+def getLastPostOrderedByDate():
+	return db.session.query(app.models.Post).\
+	order_by(asc(app.models.Post.date)).first()
+
 
 #Tags
 def newTag(tag_name):
@@ -65,7 +84,6 @@ def getTagByName(tag_name):
 	return db.session.query(app.models.Tag).\
 	filter(app.models.Tag.name == tag_name).first()
 
-#-todo-WORKING BUT NOT IN AUTOMATED WAY!
 def removeTag(tag_name):
 	tag = db.session.query(app.models.Tag).\
 	filter(app.models.Tag.name == tag_name).first()
@@ -74,13 +92,22 @@ def removeTag(tag_name):
 	filter(app.models.PostTagsAssociation.tag_id==tag.id).all()
 	for ass in associations_posts_tag:
 		removeTagFromPost(ass.post_id,ass.tag_id)
-
 	db.session.delete(tag)
 	db.session.commit()
 
 def getPostsByTag(tag_name):
-	return db.session.query(app.models.PostTagsAssociation).\
-	filter(app.models.PostTagsAssociation.tag_name == tag_name).all()
+	posts = []
+
+	tag_id = db.session.query(app.models.Tag.id).\
+	filter(app.models.Tag.name == tag_name).first()
+	associations = db.session.query(app.models.PostTagsAssociation).\
+	filter(app.models.PostTagsAssociation.tag_id == tag_id).all()
+
+	for assoc in associations:
+		post = getPostByID(assoc.post_id)
+		posts.append(post)
+
+	return posts
 
 def editTag(old_tag_name, new_tag_name):
 	tag = db.session.query(app.models.Tag).\
