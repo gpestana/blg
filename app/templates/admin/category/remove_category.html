@@ -1,0 +1,20 @@
+{% extends "admin/adm_base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+<h2>Remove Category</h2>
+
+<form name="input" action="/admin/remove_category" method="POST">
+<select name="name">
+	{% for cat in content %}
+	<option value="{{cat.name}}">{{cat.name}}</option>
+	{% endfor %}
+</select>
+<input type="submit" value="Submit">
+{% endblock %}

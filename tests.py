@@ -10,8 +10,8 @@ class TestSequenceBasic(unittest.TestCase):
 		db.newUser("user1","user1@blg.com","pass1")
 		db.newCategory("cat1")
 		db.newCategory("cat2")
-		db.newPost("title1","content1","admin", "cat1")
-		db.newPost("title2","content2","admin", "cat2")
+		db.newPost("title1","content1","admin", db.getCategoryByName("cat1").id)
+		db.newPost("title2","content2","admin", db.getCategoryByName("cat2").id)
 		db.newTag("tag1")
 		db.newTag("tag2")
 
@@ -75,7 +75,24 @@ class TestSequenceBasic(unittest.TestCase):
 
 		tag_id = db.getPostByTitle("title2").tag[0].tag_id
 		self.assertEqual(db.getTagByID(tag_id).name, "new tag1")
-	
+
+	def testRemoveCategory(self):
+		db.removeCategory("cat1")
+		#Assertions
+		self.assertEqual(\
+			len(db.getAllCategories()), 1)
+		self.assertEqual(\
+			db.getAllCategories()[0].name, "cat2")
+		self.assertEqual(\
+			db.getPostByTitle("title1").category, None)
+
+	def testEditCategory(self):
+		db.editCategory("cat1", "catn")
+		#Assertions
+		self.assertEqual(\
+			db.getCategoryByName("cat1"), None)
+		self.assertEqual(\
+			db.getCategoryByName("catn").name, "catn")
 
 class TestSequencePostListing(unittest.TestCase):
 
@@ -83,11 +100,11 @@ class TestSequencePostListing(unittest.TestCase):
 		db.newUser("user1","user1@blg.com","pass1")
 		db.newCategory("cat1")
 		db.newCategory("cat2")
-		db.newPost("title1","content1","admin", "cat1")
-		db.newPost("title2","content2","admin", "cat1")
-		db.newPost("title3","content3","admin", "cat1")
-		db.newPost("title4","content4","admin", "cat2")
-		db.newPost("title5","content5","admin", "cat2")
+		db.newPost("title1","content1","admin", db.getCategoryByName("cat1").id)
+		db.newPost("title2","content2","admin", db.getCategoryByName("cat1").id)
+		db.newPost("title3","content3","admin", db.getCategoryByName("cat1").id)
+		db.newPost("title4","content4","admin", db.getCategoryByName("cat2").id)
+		db.newPost("title5","content5","admin", db.getCategoryByName("cat2").id)
 		db.newTag("tag1")
 		db.newTag("tag2")
 

@@ -38,14 +38,14 @@
 
 .cbp-vimenu li a:hover,
 .cbp-vimenu li:first-child a{
-	background: #000;
+	background: #446847;
 	color: #fff;
 }
 
 /* class for current item */
 .cbp-vimenu li.cbp-vicurrent a {
-	background: #fff;
-	color: #47a3da;
+	background: #446847;
+	color: #fff;
 }
 
 .cbp-vimenu li a:before {

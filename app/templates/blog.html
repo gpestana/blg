@@ -8,7 +8,6 @@
 {% endblock %}
 
 {% block main %}
-
 <script>
 	function loadMorePosts() {
 		var req = $.ajax({
@@ -22,49 +21,63 @@
 			dataType: "jsonp"
 		}).done(function(data) {
 			if(data.posts == 0){
-				$( "a.loadMore" ).replaceWith("Ups, after all there's no more posyts to read :D");			
-				console.log(data)
+				$( "a.loadMore" ).replaceWith("Ups, after all there's no more posyts to read :D");		
 			} else {
-				console.log(data.posts[0].category);
 				for (var i = 0; i < data.posts.length; i++) {
 					var s = data.posts[i].id
-					var structure ='<div class = "shortPost"><a class="title" id = "postLink'+s+'" href =></a><p id = "content'+s+'" ></p><p><a id = "postLink'+s+'" href =>Read post</a></p><div class="postFooter'+s+'">at <strong><span id ="date'+s+'"></span></strong> by <strong><span id = "author'+s+'"></span></strong><br><strong><a id = "tagLink'+s+'" href =>#<span id="tagName'+s+'"><span></a></strong></div></div>'
+					var max_lenght = 150
+
+					//shorten content
+					var trimmedString = data.posts[i].content.substring(0,max_lenght)
+					trimmedString = trimmedString.substr(0, Math.min(trimmedString.length, trimmedString.lastIndexOf(" ")))
+					
+					//struct to append data
+					var structure ='<div class = "shortPost"><a class="title" id = "postLink'+s+'" href =></a><p id = "content'+s+'" ></p><p><a id = "postLink'+s+'" href =>Read post</a></p><div class="postFooter'+s+'">at <strong><span id ="date'+s+'"></span></strong> by <strong><span id = "author'+s+'"></span></strong><br><span id ="tag_label'+s+'"></span><strong><a id = "tagLink'+s+'" href =><span id="tagName'+s+'"><span></a></strong></div></div>'
 
 					$( "div.morePostsStructure" ).append(structure);
 
+					//data append dynamically
 					$("a#postLink"+s).attr("href", "/post/"+data.posts[i].id);
 					$("a#postLink"+s+".title").append("<h3>"+data.posts[i].title+"</h3>")
-					$("p#content"+s).append(data.posts[i].content);
+					$("p#content"+s).append(trimmedString+" ... ");
 					$("span#date"+s).append(data.posts[i].date);
 					$("span#author"+s).append(data.posts[i].author);
 
+					//tags
+					if(data.posts[i].tags.length>0) {
+						$("span#tag_label"+s).append("tags: ");
+						for(var t=0; t<data.posts[i].tags.length; t++) {
+							$("a#tagLink"+s).append("#"+data.posts[i].tags[t]+"  ");
+							$("a#tagLink"+s).attr("href", "/tag/"+data.posts[i].tags[t]);
+						}
+					}
 					last_post_id = (data.posts[i].id)
-
 					if (last_post_id == '{{last_id}}') {
 						$("a.loadMore").replaceWith("No more posts to fetch!");
 					}
-
 				}
 			}
 		});
-	};
+};
+
+
+window.last_post_id = '{{posts[0].id}}';
+$(document).ready(loadMorePosts());
+
 
 </script>
-
-
 
 {% for post in posts %}
 {% if loop.index == 1 %}
 {% include "snippets/full_post.html" %}
-<br>
-<br>
+<br><br>
+{% if singlePost != True %}
 <h2>Older posts</h2>
+<div class ="morePostsStructure"></div>
+<center><a class="loadMore" href="#" onclick="loadMorePosts()"> There's more to read... </a></center>
 {% else %}
-{% include "snippets/short_post.html" %}
+<a href="/blog"> <h3>Back</h3> </a>
+{% endif %}
 {% endif %}
 {% endfor %}
-
-<div class ="morePostsStructure"></div>
-
-<center><a class="loadMore" href="#" onclick="loadMorePosts()"> There's more to read... </a></center>
 {% endblock %}

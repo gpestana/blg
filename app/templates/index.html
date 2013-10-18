@@ -1,18 +1,14 @@
-<h1>blG</h1>
+ <!DOCTYPE html>
+ <head>
+ 	<link rel="stylesheet" type="text/css" href="../static/css/default.css" />
+ 	<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
+ 	<link rel="stylesheet" type="text/css" href="http://fonts.googleapis.com/css?family=Tangerine">
 
-<br>
-<br>
-{% with messages = get_flashed_messages() %}
-<h4>Developer messages:</h4>
-{% for message in messages %}
-<li>{{ message }}</li>
-{% endfor %}
-{% endwith %}
-
-<br>
-<h4>Login:</h4>
-<form name="input" action="{{ url_for('login') }}" method="POST">
-Username: <input type="text" name="username"><br>
-Password: <input type="password" name="password"><br>
-<input type="submit" value="Submit">
-</form>
+ </head>
+ <body>
+ 	<div id ="index">
+ 		<h1>Gonçalo Pestana</h1>
+ 		<br>
+ 		<p><a href="/blog">Blog |</a> Dummy content. Engine under construction.</p>
+ 	</div>
+ </body>

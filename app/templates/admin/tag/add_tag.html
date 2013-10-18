@@ -1,0 +1,29 @@
+{% extends "admin/adm_base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+<h2>Add Tag</h2>
+
+<br>
+<h4>Existent tags:</h4>
+
+<ul >
+{% for tag in content %}
+<li >{{tag.name}}</li>
+{% endfor %}
+</ul>
+
+<h4></h4>
+<form name="input" action="/admin/add_tag" method="POST" enctype="multipart/form-data"	>
+New Tag name: <input type="text" name="name"><br>
+<input type="submit" value="Submit">
+</form>
+
+
+{% endblock %}

@@ -16,32 +16,39 @@ def load_user(id):
 
 @app.route("/login", methods=["POST", "GET"])
 def login():
-	form = LoginForm(request.form)
-	user = db.getUserByUsername(form.username.data)
 
-	if user == None:
-		flash("User does not exist.")
-		return redirect(url_for('index'))
+	if request.method == "POST":
+		form = LoginForm(request.form)
+		user = db.getUserByUsername(form.username.data)
+		ok = False
+		if user == None:
+			msg = "User does not exist."
+			return render_template("admin/adm_login.html", msg = msg,\
+				ok = ok)
 
-	elif form.password.data != user.password:  
-		flash("Wrong password.")
-		return redirect(url_for('index'))
+		elif form.password.data != user.password:  
+			msg = "User and password do not match."
+			return render_template("admin/adm_login.html", msg = msg,\
+				ok = ok)
 
-	flash("Logged IN successfully.")
-	login_user(user)
-	return redirect(url_for('index'))
+		login_user(user)
+		msg = "User logged in successfully!"
+		return render_template("admin/adm_index.html", msg = msg,\
+			ok = True)
+	else:
+		return render_template("admin/adm_login.html", msg = False)
+
 
 @app.route("/logout")
 @login_required
 def logout():
 	logout_user()
-	flash("Logged OUT successfully.")
 	return redirect(url_for('index'))	
 
 @login_manager.unauthorized_handler
 def unauthorized():
-    flash("Sorry, you have to be logged in to access the page requested.")
-    return redirect(url_for('index'))
+    return render_template("admin/adm_login.html",\
+     msg ="Sorry, you have to be logged in to access the requested page.", ok=False)
 
 '''Main page view
 '''
@@ -80,7 +87,8 @@ def singlePost(post_id):
 	nr_posts = 1
 	posts = []
 	posts.append(db.getPostByID(post_id)) 
-	return render_template("blog.html", posts = posts, nr_posts = nr_posts)
+	return render_template("blog.html", posts = posts, nr_posts = nr_posts,\
+	 singlePost = True)
 
 #RESTfull side
 

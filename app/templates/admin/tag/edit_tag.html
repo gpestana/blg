@@ -1,0 +1,20 @@
+{% extends "admin/adm_base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+<h2>Edit Tag</h2>
+<form name="input" action="/admin/edit_tag" method="POST">
+<select name="old_name">
+	{% for tag in content %}
+	<option value="{{tag.name}}">{{tag.name}}</option>
+	{% endfor %}
+</select>
+New tag's name: <input type="text" name="new_name"><br>
+<input type="submit" value="Submit">
+{% endblock %}

@@ -1,0 +1,27 @@
+{% extends "admin/adm_base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+<h2>Add Category</h2>
+<br>
+<h4>Existent categories:</h4>
+
+<ul >
+{% for cat in content %}
+<li >{{cat.name}}</li>
+{% endfor %}
+</ul>
+
+<h4></h4>
+<form name="input" action="/admin/add_category" method="POST" enctype="multipart/form-data"	>
+New Category name: <input type="text" name="name"><br>
+<input type="submit" value="Submit">
+</form>
+
+{% endblock %}

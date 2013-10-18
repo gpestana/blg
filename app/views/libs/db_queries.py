@@ -116,11 +116,37 @@ def editTag(old_tag_name, new_tag_name):
 	tag.name = new_tag_name
 	db.session.commit()
 
+def getAllTags():
+	return db.session.query(app.models.Tag).all()
+
 #Categories:
+def getCategoryByName(category_name):
+	return db.session.query(app.models.Category).\
+	filter(app.models.Category.name == category_name).first()
+
+def getCategoryByID(category_id):
+	return db.session.query(app.models.Category).\
+	filter(app.models.Category.id == category_id).first()
+
 def newCategory(category_name):
 	category = app.models.Category(category_name)
 	db.session.add(category)
 	db.session.commit()
+
+def removeCategory(category_name):
+	category = db.session.query(app.models.Category).\
+	filter(app.models.Category.name == category_name).first()
+	db.session.delete(category)
+	db.session.commit()
+
+def editCategory(old_name, new_name):
+	category = db.session.query(app.models.Category).\
+	filter(app.models.Category.name == old_name).first()
+	category.name = new_name
+	db.session.commit()
+
+def getAllCategories():
+	return db.session.query(app.models.Category).all()
 
 
 #Posts&Tags

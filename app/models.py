@@ -3,6 +3,7 @@ from app import db
 from sqlalchemy.orm import relationship, backref
 from sqlalchemy import Table, Column, Integer, String, DateTime, ForeignKey, Boolean
 
+
 class User(db.Model):
 	__tablename__ = "users"
 	id = Column(Integer, primary_key = True)
@@ -29,6 +30,7 @@ class User(db.Model):
    		return False
 
 
+
 class Post(db.Model):
 	__tablename__ = "posts"
 	id = Column(Integer, primary_key = True)
@@ -37,17 +39,16 @@ class Post(db.Model):
 	content = Column(String, nullable = False)
 	author = Column(String, nullable = False)
 
-
-	category = Column(String(50), ForeignKey('categories.name'))
+	category = Column(Integer, ForeignKey('categories.id'), nullable = True)
 	tag = relationship("PostTagsAssociation", backref="tags", cascade='all')
 
-	def __init__(self, title, content, author, category):
+	def __init__(self, title, content, author, category_id):
 		self.title = title
 		self.content = content
 		self.author = author
 		self.date = datetime.datetime.now()
 		#self.date = datetime.datetime.now().strftime('%d %b %Y, %H %M')
-		self.category = category
+		self.category = category_id
 
 	def __repr__(self):
 		return 'Post '+str(self.id)
@@ -63,6 +64,9 @@ class Post(db.Model):
            'author': self.author
        }
 
+
+
+
 class Tag(db.Model):
 	__tablename__ = "tags"
 	id = Column(Integer, primary_key = True)
@@ -73,16 +77,22 @@ class Tag(db.Model):
 	def __repr__(self):
 		return 'Tag Name: %r' % self.name
 
+
+
+
 class Category(db.Model):
 	__tablename__ = "categories"
-	name = Column(String(50), primary_key = True)
-
+	id = Column(Integer, primary_key = True)
+	name = Column(String(50), nullable=False)
 	post = relationship("Post")
 
 	def __init__(self, category_name):
 		self.name = category_name
 	def __repr__(self):
 		return 'Category: %r' % self.name
+
+
+
 
 class PostTagsAssociation(db.Model):
 	__tablename__ = "posts_tags_association"

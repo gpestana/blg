@@ -1,0 +1,31 @@
+{% extends "admin/adm_base.html" %}
+
+{% block head %}
+{{ super() }}
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block container %}
+
+
+<div class="container">
+
+<center>
+<div class = "login-box" style="max-width:300px;">
+		<form class="form-signin" name = "input" action="{{ url_for('login') }}", method="POST">
+			<h2 class="form-signin-heading">Please sign in</h2>
+			<br><br>
+			<input type="text" name="username" class="form-control" placeholder="Username" autofocus>
+			<input type="password" name="password" class="form-control" placeholder="Password">
+			<br>
+			<button class="btn btn-lg btn-primary btn-block" style="max-width:200px;" type="submit">Sign in</button>
+		</form>
+	</div>
+</center>
+<br>
+<br>
+</div> <!-- /container -->
+
+{% endblock %}
