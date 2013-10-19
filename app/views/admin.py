@@ -1,3 +1,4 @@
+#coding=utf-8
 from app import app, login_manager
 import libs.db_queries as db
 from flask import request, render_template, redirect, url_for, flash, jsonify, json, Response
