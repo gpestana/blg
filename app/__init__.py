@@ -13,9 +13,13 @@ app.secret_key = 'secret_key'
 
 
 #SQLAlchemy+db
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",\
-	"postgresql+psycopg2://user:pass@localhost/blg")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",\
+#	"postgresql+psycopg2://user:pass@localhost/blg")
+
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 db = SQLAlchemy(app)
+
+
 
 #Models+Views
 from app import models
