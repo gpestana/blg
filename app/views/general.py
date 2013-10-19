@@ -126,7 +126,7 @@ def getPostsAfterPost(post_id, nr_posts):
 	return new_array
 
 
-@app.route('/_getPosts')
+@app.route('/blog/_getPosts')
 @jsonp
 def restGetPosts():
 	post_id = request.args.get('post_id', 9, type=int)

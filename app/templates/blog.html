@@ -9,9 +9,13 @@
 
 {% block main %}
 <script>
+
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+
+
 	function loadMorePosts() {
 		var req = $.ajax({
-			url: "http://127.0.0.1:5000/_getPosts?callback=?",
+			url: $SCRIPT_ROOT+"_getPosts?callback=?",
 			type: "GET",
 			cache: false,
 			data: { 
