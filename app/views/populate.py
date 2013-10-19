@@ -1,4 +1,3 @@
-#coding=utf-8
 from app import app
 import libs.db_queries as db
 
