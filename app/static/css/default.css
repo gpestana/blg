@@ -189,8 +189,15 @@ h3, p {
 div#index {
 	padding: 100px;
 	color: black;
-	font-family: 'Motserrat', serif;
+	font-family: 'Lato', Calibri, Arial, sans-serif;
+	letter-spacing:6px;
 }
+
+div#index h1 {
+	letter-spacing:16px;
+	padding: 0px 0px 35px 80px;
+}
+
 span.title {
 	font-size: 50px;
 }
