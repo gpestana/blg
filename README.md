@@ -1,7 +1,8 @@
 blg
 ===
 
-Blog engine implemented with Python - Flask framework - with Admin Panel and search engine.
+Blog engine implemented with Python - Flask framework - and PostgreSQL, with Admin Panel and search engine. 
+Ready to deploy in Heroku.
 
 
 Main modules:
