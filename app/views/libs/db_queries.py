@@ -2,6 +2,18 @@ from app import db
 import app.models
 from sqlalchemy import desc, asc
 
+#Search
+def search(keywords, nr_posts):
+	raw_results = db.engine.execute("SELECT id, ts_rank_cd\
+		(to_tsvector('content'),query) AS rank FROM posts,\
+		to_tsquery('"+keywords+"') query WHERE to_tsvector(content) @@ query\
+		ORDER BY rank DESC LIMIT "+nr_posts+";")
+	return raw_results
+
+def getHighlightContent(id_post, keywords):
+	content = getPostByID(id_post).content
+	return db.engine.execute("SELECT ts_headline('english', '"+content+"',\
+	 to_tsquery('"+keywords+"'))");
 
 #Users
 def newUser(username, email, password):

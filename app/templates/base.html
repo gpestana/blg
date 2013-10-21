@@ -5,16 +5,31 @@
  	<meta charset="UTF-8" />
  	<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1"> 
  	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
- 	<title>Gonçalo Pestana</title>
+ 	<title>Goncalo Pestana</title>
 
  	<meta name="description" content="Gonçalo Pestana's personal blog with wanders about social entrepreneurship, coding and awesomeness. " />
  	<meta name="keywords" content="Gonçalo Pestana, social innovation, social entrepreneurship, coding" />
  	<meta name="author" content="Codrops" />
 
+ 	<link rel="stylesheet" type="text/css" href="../static/css/tooltipster.css" />
  	<link rel="stylesheet" type="text/css" href="../static/css/default.css" />
  	<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
  	<script src="../static/js/modernizr.custom.js"></script>
  	<script src="../static/js/jquery.js"></script>
+ 	<script type="text/javascript" src="../static/js/jquery.tooltipster.min.js"></script>
+
+	<script>
+        $(document).ready(function() {
+            $('.tooltip').tooltipster({
+            	delay: 200,
+  				fixedWidth: 100,
+  				interactive: true,
+  				position: 'left',
+    			theme: '.search'
+
+    		});
+        });
+    </script>
 
  </head>
  {% endblock %}
@@ -26,9 +41,9 @@
  			<h4> Not just another blog (this one is written in broken latin)</h4>
  		</header>
  		<ul class="cbp-vimenu">
- 			<li><a href="#" class="icon-logo">Logo</a></li>
+ 			<li><a href="/blog" class="icon-logo">Logo</a></li>
+ 			<li><a href="#" class="icon-search tooltip" title='<form name="input" action="/search/" method="POST" enctype="multipart/form-data"> <input type="text" name="query" placeholder="Keywords..."><input id="searchSubmit" type="submit" value="Search">'>Search</a></li>
  			<li><a href="#" class="icon-archive">Archive</a></li>
- 			<li><a href="#" class="icon-search">Search</a></li>
  			<li><a href="#" class="icon-pencil">Pencil</a></li>
 				<!-- Example for active item:
 				<li class="cbp-vicurrent"><a href="#" class="icon-pencil">Pencil</a></li>
@@ -44,4 +59,6 @@
 		</div>
 	</div>
 </body>
+
+
 </html>

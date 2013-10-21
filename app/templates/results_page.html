@@ -1,0 +1,42 @@
+{% extends "base.html" %}
+
+{% block head %}
+{{super()}}
+<link rel="stylesheet" type="text/css" href="../../static/css/tooltipster.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
+<link rel="stylesheet" type="text/css" href="../../static/css/component.css" />
+<script src="../../static/js/modernizr.custom.js"></script>
+<script src="../../static/js/jquery.js"></script>
+<script type="text/javascript" src="../../static/js/jquery.tooltipster.min.js"></script>
+<script>
+	$(document).ready(function() {
+		$('.tooltip').tooltipster({
+			delay: 200,
+			fixedWidth: 100,
+			interactive: true,
+			position: 'left',
+			theme: '.search'
+
+		});
+	});
+</script>
+
+{% endblock %}
+{% block basic %}
+{{ super() }}
+{% endblock %}
+
+{% block main %}
+
+<h1>Results of search for - {{query}}</h1>
+
+{% for key, value in content.iteritems() %}
+<p><a href="/post/{{key}}">{{value[0]}}</a></p><br>
+<p>... {{value[1][0]|safe}} ...</p> <br><br>
+{% endfor %}
+<br>
+<br>
+<a href="/blog"> <h3>Back</h3> </a>
+
+
+{% endblock %}

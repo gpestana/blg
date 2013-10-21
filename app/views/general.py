@@ -1,9 +1,10 @@
 #coding=utf-8
 from app import app, login_manager
 import libs.db_queries as db
-from flask import request, render_template, redirect, url_for, flash, jsonify, json, Response
+from flask import request, render_template, redirect, url_for, flash, jsonify,\
+ json, Response
 from flask_login import login_user, LoginManager, login_required, logout_user
-from app.forms import LoginForm
+from app.forms import LoginForm, SearchForm
 from flask_wtf import Form
 
 from functools import wraps
@@ -48,7 +49,8 @@ def logout():
 @login_manager.unauthorized_handler
 def unauthorized():
     return render_template("admin/adm_login.html",\
-     msg ="Sorry, you have to be logged in to access the requested page.", ok=False)
+     msg ="Sorry, you have to be logged in to access the requested page.",\
+      ok=False)
 
 '''Main page view
 '''
@@ -57,6 +59,28 @@ def unauthorized():
 def index():
 	return render_template("index.html")
 
+'''Search Engine
+'''
+
+@app.route('/search/', methods=['POST'])
+def search():
+	content = {}
+	nr_posts = 10
+
+	form = SearchForm(request.form)
+	
+	search_result = db.search(form.query.data, str(nr_posts))
+	if search_result != None:
+		
+		for row in search_result:
+			post = db.getPostByID(row['id'])
+			content[row['id']] = [
+				post.title,
+				db.getHighlightContent(row['id'],form.query.data).\
+				fetchall()[0]]
+
+	return render_template("results_page.html", content = content,\
+	 query = form.query.data)
 
 '''Blog Engine
 '''
