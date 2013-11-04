@@ -29,7 +29,6 @@
 {% block main %}
 
 <h1>Results of search for - {{query}}</h1>
-
 {% for key, value in content.iteritems() %}
 <p><a href="/post/{{key}}">{{value[0]}}</a></p><br>
 <p>... {{value[1][0]|safe}} ...</p> <br><br>

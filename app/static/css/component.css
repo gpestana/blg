@@ -9,7 +9,8 @@
 	font-style: normal;
 }
 
-.cbp-vimenu {
+
+.simple-vimenu {
 	position: fixed;
 	overflow: hidden;
 	top: 0;
@@ -19,6 +20,23 @@
 	margin: 0;
 	padding: 0;
 	background: #f7f7f7;
+
+	width: 30%;
+}
+
+
+.cbp-vimenu {
+	position: fixed;
+	overflow: hidden;
+	top: 0;
+	left: 0;
+	list-style-type: none;
+	margin: 0;
+	padding: 0;
+	background: #f7f7f7;
+
+width: 30%;	
+	height: 100%;
 }
 
 .cbp-vimenu li a {
@@ -34,6 +52,8 @@
 	-webkit-transition: background 0.1s ease-in-out;
 	-moz-transition: background 0.1s ease-in-out;
 	transition: background 0.1s ease-in-out;
+
+	width: 100%;
 }
 
 .cbp-vimenu li a:hover,

@@ -25,8 +25,9 @@ $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
 			dataType: "jsonp"
 		}).done(function(data) {
 			if(data.posts == 0){
-				$( "a.loadMore" ).replaceWith("Ups, after all there's no more posyts to read :D");		
+				$( "a.loadMore" ).replaceWith("Ups, after all there's no more posts to read :D");		
 			} else {
+
 				for (var i = 0; i < data.posts.length; i++) {
 					var s = data.posts[i].id
 					var max_lenght = 150
