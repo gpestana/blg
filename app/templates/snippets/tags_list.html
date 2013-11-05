@@ -1,0 +1,7 @@
+<div id="tagsList">
+tags
+{% for tag in tags %}
+<strong><p>#{% filter lower %}{{tag.name}}{% endfilter%}</a></p></strong>
+{% endfor %}
+
+</div>

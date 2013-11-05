@@ -88,6 +88,9 @@ def search():
 @app.route('/blog/', methods=['POST','GET'])
 @app.route('/blog/<int:nr_posts>')
 def blog(nr_posts=None):
+
+	categories = db.getAllCategories()
+	tags = db.getAllTags()
 	
 	if request.method == 'POST':
 		return "POST"
@@ -99,20 +102,26 @@ def blog(nr_posts=None):
 
 	posts = db.getPostsOrderedByDate(nr_posts) 
 	return render_template("blog.html", posts = posts,\
-	 nr_posts = int(float(nr_posts)), last_id = last_id)
+	 nr_posts = int(float(nr_posts)), last_id = last_id,\
+	 categories = categories, tags = tags)
 
 @app.route('/tag/<tag>')
 def listTag(tag):
+	categories = db.getAllCategories()
+	tags = db.getAllTags()
 	posts = db.getPostsByTag(tag)
-	return render_template("tag_list.html", posts = posts, tag = tag)
+	return render_template("tag_list.html", posts = posts, tag = tag,\
+		categories = categories, tags = tags)
 
 @app.route('/post/<post_id>')
 def singlePost(post_id):
+	categories = db.getAllCategories()
+	tags = db.getAllTags()
 	nr_posts = 1
 	posts = []
 	posts.append(db.getPostByID(post_id)) 
 	return render_template("blog.html", posts = posts, nr_posts = nr_posts,\
-	 singlePost = True)
+	 singlePost = True, categories = categories, tags = tags)
 
 #RESTfull side
 

@@ -1,0 +1,7 @@
+<div id="categoriesList">
+categories
+{% for category in categories %}
+<strong><p>{% filter lower %}{{category.name}}{% endfilter%}</a></p></strong>
+
+{% endfor %}
+</div>

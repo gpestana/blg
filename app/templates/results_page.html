@@ -1,26 +1,7 @@
 {% extends "base.html" %}
 
 {% block head %}
-{{super()}}
-<link rel="stylesheet" type="text/css" href="../../static/css/tooltipster.css" />
-<link rel="stylesheet" type="text/css" href="../../static/css/default.css" />
-<link rel="stylesheet" type="text/css" href="../../static/css/component.css" />
-<script src="../../static/js/modernizr.custom.js"></script>
-<script src="../../static/js/jquery.js"></script>
-<script type="text/javascript" src="../../static/js/jquery.tooltipster.min.js"></script>
-<script>
-	$(document).ready(function() {
-		$('.tooltip').tooltipster({
-			delay: 200,
-			fixedWidth: 100,
-			interactive: true,
-			position: 'left',
-			theme: '.search'
-
-		});
-	});
-</script>
-
+{{ super() }}
 {% endblock %}
 {% block basic %}
 {{ super() }}
