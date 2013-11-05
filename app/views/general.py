@@ -168,6 +168,20 @@ def restGetPosts():
 	return jsonify(posts=posts)	
 
 
+@app.route('/blog/_getAllTags')
+@jsonp
+def restGetTags():
+	tags = [i.serialize for i in db.getAllTags()]
+	return jsonify(tags=tags)	
+
+
+@app.route('/blog/_getAllCategories')
+@jsonp
+def restGetCategories():
+	categories = [i.serialize for i in db.getAllCategories()]
+	return jsonify(categories=categories)	
+
+
 
 ##Small tests
 @app.route('/test')

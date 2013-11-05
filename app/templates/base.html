@@ -16,7 +16,9 @@
  	<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
  	<script src="../static/js/modernizr.custom.js"></script>
  	<script src="../static/js/jquery.js"></script>
- 	<script type="text/javascript" src="../static/js/jquery.tooltipster.min.js"></script>
+  <script src="../static/js/main.js"></script>
+ 	
+  <script type="text/javascript" src="../static/js/jquery.tooltipster.min.js"></script>
 
 	<script>
         $(document).ready(function() {
@@ -29,6 +31,15 @@
 
     		});
         });
+
+
+$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+window.last_post_id = '{{posts[0].id}}';
+$(document).ready(loadMorePostsDirect());
+
+loadCategories();
+loadTags();
+
     </script>
 
  </head>
@@ -45,30 +56,24 @@
 
 
 <!-- JUST SKETCHING THE MENU-->
- 		<ul class="cbp-vimenu">
- 		<center>
- 		(logo or social media icons)
- 			<li><a href="/blog" class="icon-logo">Logo</a></li> Gonçalo Pestana<br><b>Full stack & HW dev | Entrepreneurship | Social ventures</b>
+ <ul class="cbp-vimenu">
+ <center>
+ <!--<li><a href="/blog" class="icon-logo">Logo</a></li> Gonçalo Pestana<br><b>-->Full stack & HW dev | Entrepreneurship | Social ventures</b>
 <h5>Thinker and doer committed to make the difference by addressing the most challenging humanitarian problems through technology and entrepreneurial mindset.</h5> 
+
 <form name="input" action="/search/" method="POST" enctype="multipart/form-data"> <input type="text" name="query" placeholder="Keywords..."><input id="searchSubmit" type="submit" value="Search">
 </center>
-<br><br>
-<h3>Categories</h3>
-<br>
-<p>Social entrepreneurship</p>
-<br>
-<p>Webdev</p>
-<br>
-<br>
- <h3>Tags</h3>
-<br>
-<p>Social entrepreneurship</p>
-<br>
-<p>Webdev</p>
 
-<br>
-<br>
- <br>
+<br><br>
+
+<h3>Categories</h3>
+<div id="categoriesList"></div>
+
+ <h3>Tags</h3>
+<div id="tagsList"></div>
+
+
+<br><br><br>
  Bio | Projects | Blog
 <br>
 <br>

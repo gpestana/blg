@@ -77,6 +77,13 @@ class Tag(db.Model):
 	def __repr__(self):
 		return 'Tag Name: %r' % self.name
 
+	@property
+	def serialize(self):
+		return {
+		   'id': self.id,
+           'name': self.name
+           }
+
 
 
 
@@ -91,6 +98,12 @@ class Category(db.Model):
 	def __repr__(self):
 		return 'Category: %r' % self.name
 
+	@property
+	def serialize(self):
+		return {
+		   'id': self.id,
+           'name': self.name
+           }
 
 
 
