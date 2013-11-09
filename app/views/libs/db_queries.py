@@ -160,6 +160,22 @@ def editCategory(old_name, new_name):
 def getAllCategories():
 	return db.session.query(app.models.Category).all()
 
+def getPostsByCategory(category):
+	
+	category = "Quisque"
+
+	cat_id = db.session.query(app.models.Category.id).\
+	filter(app.models.Category.name == category).first()	
+
+	print "--------------"
+	print category
+	print cat_id
+	
+	posts = db.session.query(app.models.Post).\
+	filter(app.models.Post.category == cat_id).all()
+
+	return posts
+
 
 #Posts&Tags
 def addTagToPost(post_id, tag_id):

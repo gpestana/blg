@@ -1,23 +1,19 @@
 {% extends "base.html" %}
 
 {% block head %}
-{{ super() }}
+	{{ super() }}
 {% endblock %}
 {% block basic %}
-{{ super() }}
+	{{ super() }}
 {% endblock %}
 
 {% block main %}
 {{ super() }}
 <div class = "main-content">
-<h3>Results of search for: {{query}}</h3>
-{% for key, value in content.iteritems() %}
-<p><a href="/post/{{key}}">{{value[0]}}</a></p><br>
-<p>... {{value[1][0]|safe}} ...</p> <br><br>
+<h3>Filter by {% filter lower %}{{filter}}{% endfilter %}</h3>
+{% for post in posts %}
+	{% include "snippets/short_post.html" %}
 {% endfor %}
-<br>
-<br>
 <a href="/blog"> <h3>Back</h3> </a>
 </div>
-
 {% endblock %}

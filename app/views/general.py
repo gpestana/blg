@@ -110,8 +110,17 @@ def listTag(tag):
 	categories = db.getAllCategories()
 	tags = db.getAllTags()
 	posts = db.getPostsByTag(tag)
-	return render_template("tag_list.html", posts = posts, tag = tag,\
+	return render_template("post_filter.html", posts = posts, filter = tag,\
 		categories = categories, tags = tags)
+
+@app.route('/category/<category>')
+def listCategory(category):
+	categories = db.getAllCategories()
+	posts = db.getPostsByCategory(category)
+
+	return render_template("post_filter.html", posts = posts,\
+		filter = category, categories = categories)
+
 
 @app.route('/post/<post_id>')
 def singlePost(post_id):

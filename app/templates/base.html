@@ -43,17 +43,8 @@
 
 <ul class="cbp-vimenu">
   <div class="content-menu">
-<h2>Gonçalo Pestana</h2>
-<hr>
-<center><p>full stack developer; passionate about social entrepreneurship and travelling </p></center>
- 
-<br>
-<br>
-<div class = "blognav">
- blog navigation:
-   {% include "snippets/category_list.html" %}
-   {% include "snippets/tags_list.html" %}
-</div>
+
+<img class="logo" src="/static/imgs/logo/logoColor.jpg" /> 
  
 </div>
 </ul>
@@ -65,11 +56,17 @@
 {% endblock %}
 
 <div class="main">
- {% block main %}<!-- HERE -->{% endblock %}
+ {% block main %}
+
+<div class="blognav">
+{% include "snippets/category_list.html" %} 
+</div>
+
+ {% endblock %}
 </div>
 </div>
 </body>
-
 <form class ="search" name="input" action="/search/" method="POST" enctype="multipart/form-data"> <input type="text" name="query" placeholder="search"><br>
+
 
 </html>

@@ -1,7 +1,7 @@
 <div id="categoriesList">
-categories
+navigation
 {% for category in categories %}
-<strong><p>{% filter lower %}{{category.name}}{% endfilter%}</a></p></strong>
+<p><a href ='/category/{{category.name}}'>{% filter lower %}{{ category.name }}{% endfilter%}</a></a></p>
 
 {% endfor %}
 </div>
