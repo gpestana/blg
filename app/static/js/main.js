@@ -87,9 +87,16 @@ function loadTags() {
 		});
 }
 
-
-
 function sleep(milliSeconds){
 	var startTime = new Date().getTime();
 	while (new Date().getTime() < startTime + milliSeconds);
+}
+
+function responsiveAlert() {
+	var windowWidth = $(window).width();
+	
+	if(windowWidth > 768){
+
+		alert("Oh yeah")
+	}
 }

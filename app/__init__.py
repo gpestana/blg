@@ -15,11 +15,11 @@ app.secret_key = 'secret_key'
 #SQLAlchemy+db
 
 #Locally
-#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",\
-#	"postgresql+psycopg2://user:pass@localhost/blg")
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",\
+	"postgresql+psycopg2://user:pass@localhost/blg")
 
 #Heroku
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
+#app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL")
 
 db = SQLAlchemy(app)
 
