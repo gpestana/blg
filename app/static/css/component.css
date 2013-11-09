@@ -76,6 +76,17 @@
 	background:transparent url('/static/imgs/menu/twitter1.jpg') center top no-repeat;
 }
 
+.test {
+	background-color:white;
+	background-size: contain;
+	width: 100px;
+	height: 100px;
+	padding: 2px;
+}
+
+.test:hover{
+	background-color: red;
+}
 
 .myButtonLink {
 	display: inline;

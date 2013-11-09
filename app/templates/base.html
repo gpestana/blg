@@ -7,7 +7,7 @@
  	<meta name="viewport" content="width=device-width, initial-scale=1.0"> 
  	<title>Gonçalo Pestana</title>
 
-	<link rel="shortcut icon" type="image/x-icon" href="/static/imgs/fav.ico">
+ 	<link rel="shortcut icon" type="image/x-icon" href="/static/imgs/fav.ico">
 
 
  	<meta name="description" content="Gonçalo Pestana's personal blog with wanders about social entrepreneurship, coding and awesomeness. " />
@@ -19,17 +19,18 @@
  	<link rel="stylesheet" type="text/css" href="../static/css/component.css" />
  	<script src="../static/js/modernizr.custom.js"></script>
  	<script src="../static/js/jquery.js"></script>
-  <script src="../static/js/main.js"></script>
+ 	<script src="../static/js/main.js"></script>
 
-  <script type="text/javascript" src="../static/js/jquery.tooltipster.min.js"></script>
+ 	<script type="text/javascript" src="../static/js/jquery.tooltipster.min.js"></script>
 
 
-  <script>
-    $SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
-</script>
+ 	<script>
+ 		$SCRIPT_ROOT = {{ request.script_root|tojson|safe }};
+ 		$(document).ready(function(){menu();});
+ 	</script>
 
-{% if posts is defined %}
-<script>
+ 	{% if posts is defined %}
+ 	<script>
   //auto-triggered JS functions
   window.last_post_id = '{{posts[0].id}}';
   $(document).ready(loadMorePostsDirect());
@@ -39,7 +40,7 @@
   	function(event){
   		responsiveAlert();
   	});
-*/
+ */
 
 </script>
 {%endif%}
@@ -49,52 +50,51 @@
 {% endblock %}
 {% block basic %}
 <body>
-  <div class="container">
+	<div class="container">
 
-<ul class="cbp-vimenu">
-  <div class="content-menu">
+		<ul class="cbp-vimenu">
+			<div class="content-menu">
 
-<img class="logo" src="/static/imgs/logo/logoColor.jpg" /> 
+				<img class="logo" src="/static/imgs/logo/logoColor.jpg" /> 
 
-<center>
-<div class = "buttons">
-<a href="#"><img id = "large-button" src="/static/imgs/menu/bio1.jpg" /></a>
-<a href="https://twitter.com/gpestana"><img id = "small-button" src="/static/imgs/menu/twitter1.jpg"/></a> 
-<a href="#"><img id = "small-button" src="/static/imgs/menu/rss1.jpg" /></a>
-<a href="https://github.com/gpestana"><img id = "large-button" src="/static/imgs/menu/github1.jpg" /></a>
-<a href="http://fi.linkedin.com/in/gpestana"><img id = "large-button" src="/static/imgs/menu/linkedin1.jpg" /></a>
-<a href="malito:g6pestana@gmail.com"><img id = "small-button" src="/static/imgs/menu/email1.jpg" /> </a>
-<br>
+				<center>
+					<div class = "buttons">
+						<a href="#"><img type="bio" id = "large-button" class ="button" src="/static/imgs/menu/bio1.jpg" /></a>
+						<a href="https://twitter.com/gpestana"><img type="twitter" id="small-button" class ="button" src="/static/imgs/menu/twitter1.jpg"/></a> 
+						<a href="#"><img type="rss" id = "small-button" class ="button" src="/static/imgs/menu/rss1.jpg" /></a>
+						<a href="https://github.com/gpestana"><img type="github" id = "large-button" class ="button" src="/static/imgs/menu/github1.jpg" /></a>
+						<a href="http://fi.linkedin.com/in/gpestana"><img type ="linkedin" id = "large-button" class ="button" src="/static/imgs/menu/linkedin1.jpg" /></a>
+						<a href="malito:g6pestana@gmail.com"><img type= "email" id = "small-button" class ="button" src="/static/imgs/menu/email1.jpg" /> </a>
+						<br>
+
+					</div>
+				</center>
 
 
- </div>
-</center>
+				<center>
+					<div class="footnote">
+						code in github|proudly by gonçalo pestana
 
+					</center>
+				</div>
 
-<center>
-<div class="footnote">
-code in github|proudly by gonçalo pestana
+			</div>
+		</ul>
 
-</center>
-</div>
+		{% endblock %}
 
-</div>
-</ul>
+		<div class="main">
+			{% block main %}
 
-{% endblock %}
+			<div class="blognav">
+				{% include "snippets/category_list.html" %} 
+			</div>
 
-<div class="main">
- {% block main %}
-
-<div class="blognav">
-{% include "snippets/category_list.html" %} 
-</div>
-
- {% endblock %}
-</div>
-</div>
+			{% endblock %}
+		</div>
+	</div>
 </body>
 <form class ="search" name="input" action="/search/" method="POST" enctype="multipart/form-data"> <input type="text" name="query" placeholder="search"><br>
 
 
-</html>
+	</html>

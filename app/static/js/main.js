@@ -92,11 +92,13 @@ function sleep(milliSeconds){
 	while (new Date().getTime() < startTime + milliSeconds);
 }
 
-function responsiveAlert() {
-	var windowWidth = $(window).width();
-	
-	if(windowWidth > 768){
-
-		alert("Oh yeah")
-	}
+function menu() {
+	$(".button").hover(
+		function() {
+			var social_net = $(this).attr("type");
+			$(this).attr("src","/static/imgs/menu/"+social_net+"2.jpg");
+		}, function() {
+			var social_net = $(this).attr("type");
+			$(this).attr("src","/static/imgs/menu/"+social_net+"1.jpg");
+		});
 }
