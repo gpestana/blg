@@ -57,6 +57,7 @@ def unauthorized():
 
 @app.route('/')
 def index():
+	return redirect(url_for('blog'))	
 	return render_template("index.html")
 
 '''Search Engine

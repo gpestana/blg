@@ -11,13 +11,10 @@ Main modules:
   - Flask
   - PostgreSQL
   - Flask­Login
-  - Flask­SQLAlchemy
   - WTForms
   - SQLAlchemy
 
 
 #TODO list:
-- Customize search;
+- Escape search input;
 - Add/Edit/Remove post in Admin Panel;
-- Refactor AJAX code to be used in the Admin panel;
-- Frontend polish;
