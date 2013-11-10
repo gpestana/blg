@@ -7,6 +7,11 @@ from flask_login import login_user, LoginManager, login_required, logout_user
 from app.forms import LoginForm, SearchForm
 from flask_wtf import Form
 
+from werkzeug.contrib.atom import AtomFeed
+
+import urllib
+import urllib2
+
 from functools import wraps
 
 """LoginManager
@@ -202,7 +207,27 @@ def restGetCategories():
 
 
 
+"""Others - AtomFeed, auto github backup
+"""
+
+@app.route('/blog/atomfeed')
+def atomfeed():
+	url = "www.goncalopestana.co/post/"
+	feed = AtomFeed('Posts',feed_url=request.url, url=request.url_root)
+	posts = db.getAllPosts()
+
+	for post in posts:
+		feed.add(post.title, unicode(post.content), content_type='html',\
+		author=post.author, url=url+str(post.id), updated=post.date,\
+		published=post.date)
+
+	return feed.get_response()
+
+
 ##Small tests
 @app.route('/test')
 def test():
-	return str(db.getLastPostOrderedByDate())
+	url = 'https://api.github.com/users/defunkt'
+	params = urllib.urlencode({'firstName': 'John','lastName': 'Doe'})
+	response = urllib2.urlopen(url).read()
+	return response

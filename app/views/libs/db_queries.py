@@ -81,6 +81,9 @@ def getLastPostOrderedByDate():
 	return db.session.query(app.models.Post).\
 	order_by(asc(app.models.Post.date)).first()
 
+def getAllPosts():
+	return db.session.query(app.models.Post).\
+	order_by(desc(app.models.Post.date)).all()
 
 #Tags
 def newTag(tag_name):
