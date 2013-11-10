@@ -34,6 +34,7 @@ function loadMorePostsDirect() {
 					
 					//struct to append data
 					var structure ='<div class = "shortPost"><a class="title" id = "postLink'+s+'" href =></a><p id = "content'+s+'" ></p><p><a id = "postLink'+s+'" href =>Read post</a></p><div class="postFooter'+s+'">at <strong><span id ="date'+s+'"></span></strong> by <strong><span id = "author'+s+'"></span></strong><br><span id ="tag_label'+s+'"></span><strong><a id = "tagLink'+s+'" href =><span id="tagName'+s+'"><span></a></strong></div></div>'
+					var d = new Date(data.posts[i].date);
 
 					$( "div.morePostsStructure" ).append(structure);
 
@@ -41,9 +42,9 @@ function loadMorePostsDirect() {
 					$("a#postLink"+s).attr("href", "/post/"+data.posts[i].id);
 					$("a#postLink"+s+".title").append("<h3>"+data.posts[i].title+"</h3>")
 					$("p#content"+s).append(trimmedString+" ... ");
-					$("span#date"+s).append(data.posts[i].date);
-					$("span#author"+s).append(data.posts[i].author);
-
+					$("span#date"+s).append(d.getFullYear() + "-"+ (d.getUTCMonth()+1)+"-"+d.getDay()+ ", "+d.getHours()+":"+d.getMinutes());
+					$("span#author"+s).append(data.posts[i].author); 
+				
 					//tags
 					if(data.posts[i].tags.length>0) {
 						$("span#tag_label"+s).append("tags: ");

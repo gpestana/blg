@@ -3,7 +3,7 @@
 	<p>{{post.content|truncate(150)}} <a href ='/post/{{post.id}}'>Read post</a></p>
 
 	<div class="postFooter">
-		at <strong>{{ post.date }}</strong> by <strong>{{ post.author }}</strong><br>
+		at <strong>{{ post.date.strftime('%Y-%m-%d, %H:%M')  }}</strong> by <strong>{{ post.author }}</strong><br>
 		{% if post.tag %}
 		tags
 		{% for assoc in post.tag %}

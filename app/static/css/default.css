@@ -219,3 +219,7 @@ div#index li {
 	padding: 10px;
 	list-style-type: none;
 }
+
+.shortPost h3 {
+	padding-right: 20px;
+}

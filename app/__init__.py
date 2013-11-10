@@ -11,9 +11,6 @@ login_manager = LoginManager()
 login_manager.init_app(app)
 app.secret_key = 'secret_key'
 
-
-#SQLAlchemy+db
-
 #Locally
 app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get("DATABASE_URL",\
 	"postgresql+psycopg2://user:pass@localhost/blg")

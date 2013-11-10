@@ -13,5 +13,5 @@
 		{% endfor %}
 	{% endif %}
 	<br>
-	at <strong>{{ post.date }}</strong> by <strong>{{ post.author }}</strong>
+	at <strong>{{ post.date.strftime('%Y-%m-%d, %H:%M') }}</strong> by <strong>{{ post.author }}</strong>
 </div>

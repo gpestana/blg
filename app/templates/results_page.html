@@ -9,12 +9,17 @@
 
 {% block main %}
 {{ super() }}
-<div class = "main-content">
+<div class = "main-content" style="padding-top: 100px;">
 <h3>Results of search for: {{query}}</h3>
+<br><br>
+{% if not content %}
+<p>The search did not match any post content.</p>
+{% else %}
 {% for key, value in content.iteritems() %}
 <p><a href="/post/{{key}}">{{value[0]}}</a></p><br>
 <p>... {{value[1][0]|safe}} ...</p> <br><br>
 {% endfor %}
+{% endif %}
 <br>
 <br>
 <a href="/blog"> <h3>Back</h3> </a>

@@ -1,17 +1,15 @@
 #coding=utf-8
 from app import app, login_manager
 import libs.db_queries as db
+import libs.github as github
 from flask import request, render_template, redirect, url_for, flash, jsonify,\
  json, Response
 from flask_login import login_user, LoginManager, login_required, logout_user
 from app.forms import LoginForm, SearchForm
 from flask_wtf import Form
-
 from werkzeug.contrib.atom import AtomFeed
-
 import urllib
 import urllib2
-
 from functools import wraps
 
 """LoginManager
@@ -72,6 +70,7 @@ def index():
 def search():
 	content = {}
 	nr_posts = 10
+	categories = db.getAllCategories()
 
 	form = SearchForm(request.form)
 	
@@ -86,7 +85,7 @@ def search():
 				fetchall()[0]]
 
 	return render_template("results_page.html", content = content,\
-	 query = form.query.data)
+	 query = form.query.data, categories = categories)
 
 '''Blog Engine
 '''
@@ -213,7 +212,7 @@ def restGetCategories():
 @app.route('/blog/atomfeed')
 def atomfeed():
 	url = "www.goncalopestana.co/post/"
-	feed = AtomFeed('Posts',feed_url=request.url, url=request.url_root)
+	feed = AtomFeed('goncalopestana.co - blog posts',feed_url=request.url, url=request.url_root)
 	posts = db.getAllPosts()
 
 	for post in posts:
@@ -227,7 +226,15 @@ def atomfeed():
 ##Small tests
 @app.route('/test')
 def test():
-	url = 'https://api.github.com/users/defunkt'
-	params = urllib.urlencode({'firstName': 'John','lastName': 'Doe'})
-	response = urllib2.urlopen(url).read()
-	return response
+	user = "gpestana"
+	repo = "blgposts"
+	content = "random content"
+	#POST
+	#url = 'https://api.github.com/users/defunkt'
+	#params = urllib.urlencode({'firstName': 'John','lastName': 'Doe'})
+	#response = urllib2.urlopen(url).read()
+	
+	response = github.push(user,repo,content)
+
+
+	return str(response)

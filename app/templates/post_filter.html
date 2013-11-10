@@ -9,7 +9,7 @@
 
 {% block main %}
 {{ super() }}
-<div class = "main-content">
+<div class = "main-content" style="padding-top: 100px;">
 <h3>Filter by {% filter lower %}{{filter}}{% endfilter %}</h3>
 {% for post in posts %}
 	{% include "snippets/short_post.html" %}
