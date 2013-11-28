@@ -22,16 +22,20 @@ def push(user, repo, content):
 	#3rd: create tree object (also implicitly creates a blob based on content)
 	#see http://developer.github.com/v3/git/trees/
 	
-	params = urllib.urlencode(\
-		{'base_tree': current_tree_sha,\
-		'tree': {'path':"test1", 'mode':"100644", 'type':"blob",\
-		'sha':current_tree_sha}})
+	json_data = "data"
+	#params = urllib.urlencode(json_data)
 
+	tree = dict(path="test.rb", mode="100644", type="blob", sha=sha)
+	params = dict(tree=tree, base_tree=current_tree_sha)
 
-	#return params
+	#return urllib.urlencode(params)
+		
+
+	#return json_data
 
 	response = urllib2.urlopen\
-		(base_url+"repos/"+user+"/"+repo+"/git/trees", params).read()
+		(base_url+"repos/"+user+"/"+repo+"/git/trees", urllib.urlencode(params)\
+			).read()
 
 
 
