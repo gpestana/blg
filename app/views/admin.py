@@ -1,9 +1,11 @@
 #coding=utf-8
 from app import app, login_manager
 import libs.db_queries as db
-from flask import request, render_template, redirect, url_for, flash, jsonify, json, Response
+from flask import request, render_template, redirect, url_for, flash, jsonify,\
+json, Response
 from flask_login import login_user, LoginManager, login_required, logout_user
-from app.forms import LoginForm, EditCategoryForm, CategoryForm, TagForm, EditTagForm
+from app.forms import LoginForm, EditCategoryForm, CategoryForm, TagForm,\
+EditTagForm
 from flask_wtf import Form
 
 

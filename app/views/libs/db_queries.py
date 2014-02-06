@@ -3,12 +3,27 @@ import app.models
 from sqlalchemy import desc, asc
 
 #Search
-def search(keywords, nr_posts):
+
+# -> NOTE: Refactor using SQL-AlchemySearchable 
+#          (http://sqlalchemy-searchable.readthedocs.org/)
+
+def search(searchInput, nr_posts):
+
+	#sanitize input (keywords)
+	sanitizedInput = sanitizeInput(searchInput)
+
 	raw_results = db.engine.execute("SELECT id, ts_rank_cd\
 		(to_tsvector('content'),query) AS rank FROM posts,\
-		to_tsquery('"+keywords+"') query WHERE to_tsvector(content) @@ query\
-		ORDER BY rank DESC LIMIT "+nr_posts+";")
+		to_tsquery('"+sanitizedInput+"') query WHERE to_tsvector(content) @@ \
+		query ORDER BY rank DESC LIMIT "+nr_posts+";")
 	return raw_results
+
+def sanitizeInput(searchInput):
+	# Adding placeholders to the input sanitizes the inpu against SQL injetion
+	#attacks
+	finalInput = '"'+searchInput+'"'
+	return finalInput
+
 
 def getHighlightContent(id_post, keywords):
 	content = getPostByID(id_post).content
